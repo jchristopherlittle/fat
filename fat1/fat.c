@@ -24,14 +24,14 @@ int read_rootdir(FILE *f, struct dirent *dir, uint16_t max)
 	read_sector(tmp, f,sec,1);
 	while(c<max){
 		while(i<SECTOR_SIZE){
+
 			nulltmp((unsigned char*)dir_entry.fn);
 			nulltmp((unsigned char*)dir_entry.ext);
 			memcpy(dir_entry.fn, tmp+i,8);
 			memcpy(dir_entry.ext,tmp+0x08+i,3);
 			dir_entry.attr=tmp[0x0B+i];
-			if(dir_entry.fn[0]==0) /* No more directory entries */
-				i=SECTOR_SIZE;
-			else {
+
+			if(dir_entry.fn[0]!=0) { /* Process directory entries */
 				if(i==SECTOR_SIZE-32) {
 					if(dir_entry.attr==0x0F) {
 						process_longattr();
@@ -49,6 +49,8 @@ int read_rootdir(FILE *f, struct dirent *dir, uint16_t max)
 					}
 					i+=32;
 				}
+			} else {
+				i=SECTOR_SIZE;
 			}
 		}
 		c++;
