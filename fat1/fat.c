@@ -35,6 +35,8 @@ int read_rootdir(FILE *f, struct dirent *dir, uint16_t max)
 				if(i==SECTOR_SIZE-32) {
 					if(dir_entry.attr==0x0F) {
 						process_longattr();
+					} else if (dir_entry.fn[0]==0xE5){
+						;
 					} else {
 						printf("%s.%s\n",dir_entry.fn, dir_entry.ext);
 					}
@@ -44,6 +46,8 @@ int read_rootdir(FILE *f, struct dirent *dir, uint16_t max)
 				} else {
 					if(dir_entry.attr==0x0F) {
 						process_longattr();
+					} else if (dir_entry.fn[0] == 0xE5) {
+						;
 					} else {
 						printf("%s.%s\n",dir_entry.fn, dir_entry.ext);
 					}
@@ -55,7 +59,6 @@ int read_rootdir(FILE *f, struct dirent *dir, uint16_t max)
 		}
 		c++;
 	}
-
 	return 1;
 }
 

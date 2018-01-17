@@ -27,7 +27,7 @@
 #define NO_ROOT_DIR_ENT			0x011
 
 struct dirent {
-	char		fn[9];
+	unsigned char		fn[9];
 	char		ext[4];
 	uint8_t		attr;
 	uint8_t		res[2];
