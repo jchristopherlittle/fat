@@ -72,7 +72,7 @@ struct boot_sector {
     uint8_t     bootsig[2];     /* Offset 0x1f3 */
 } ;
 
-//int		cwd_sector=19;
+extern int		cwd_sector;
 
 int fat12_fill_boot_sector(unsigned char *, struct boot_sector *);
 int read_fat_phys_sector(FILE *, unsigned char *);
@@ -80,7 +80,7 @@ int read_fat_log_sector(FILE *, unsigned char *);
 int nulltmp(unsigned char *);
 int find_loc(int, int);
 int l2b_16bit(unsigned char *);
-int read_dir(struct dirent *);
+int readdir(FILE *, struct dirent *, uint16_t, unsigned int);
 int loadfat(unsigned char *, unsigned int *, int);
 int read_sector(unsigned char *, FILE *, long int, int);
 int print_sector(unsigned char *);

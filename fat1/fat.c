@@ -13,12 +13,11 @@
 #include <string.h>
 #include "fat.h"
 
-int read_rootdir(FILE *f, struct dirent *dir, uint16_t max)
+int readdir(FILE *f, struct dirent *dir, uint16_t max, unsigned int sec)
 {
 	unsigned char	tmp[512];
 	struct dirent	dir_entry;
 	int				i=0;
-	int				sec=19;
 	int				c=0;
 
 	read_sector(tmp, f,sec,1);
@@ -55,11 +54,18 @@ int read_rootdir(FILE *f, struct dirent *dir, uint16_t max)
 				}
 			} else {
 				i=SECTOR_SIZE;
+				c=max;
 			}
 		}
 		c++;
 	}
 	return 1;
+}
+
+int read_rootdir(FILE *f, struct dirent *dir, uint16_t max)
+{
+	readdir(f, dir, max, 19);
+	return 0;
 }
 
 int fat12_fill_boot_sector(unsigned char *data_block, struct boot_sector *boot_s)

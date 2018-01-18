@@ -12,6 +12,9 @@
 #include <string.h>
 #include "fat.h"
 
+int		cwd_sector=19;
+
+
 int main(int argc, char **argv)
 
 {
